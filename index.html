@@ -152,9 +152,53 @@ ul{list-style:none; margin:0; padding:0;}
 .header-actions{display:flex; align-items:center; gap:20px;}
 .header-phone{display:flex; align-items:center; gap:8px; color:var(--white); font-size:13.5px; font-weight:600;}
 .header-phone svg{color:var(--gold);}
+/* ---------- NAV TOGGLE (hamburger -> X) ---------- */
+.nav-toggle{
+  display:none; flex-direction:column; justify-content:center; gap:5px;
+  background:none; border:none; padding:8px; width:38px; height:38px;
+  position:relative; z-index:1100; flex-shrink:0;
+}
+.nav-toggle span{
+  width:22px; height:2px; background:var(--white); border-radius:2px;
+  transition:transform .35s var(--ease), opacity .25s var(--ease);
+}
+.nav-toggle.active span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-toggle.active span:nth-child(2){opacity:0;}
+.nav-toggle.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
-.nav-toggle{display:none; flex-direction:column; gap:5px; background:none; border:none; padding:6px;}
-.nav-toggle span{width:24px; height:2px; background:var(--white); transition:transform .3s, opacity .3s;}
+/* ---------- MOBILE NAV PANEL ---------- */
+.main-nav{transition:right .4s var(--ease);}
+.nav-close{
+  display:none;
+}
+.nav-backdrop{
+  display:none;
+  position:fixed; inset:0; background:rgba(6,15,32,.6);
+  z-index:998; opacity:0; transition:opacity .35s var(--ease);
+}
+.nav-backdrop.open{display:block; opacity:1;}
+
+@media (max-width: 860px){
+  .header-actions{gap:10px;}
+  .main-nav{
+    position:fixed; top:0; right:-100%; height:100vh; width:78%; max-width:320px;
+    background:var(--navy-deep); flex-direction:column; align-items:flex-start;
+    padding:100px 32px 40px; gap:26px; z-index:999; overflow-y:auto;
+    box-shadow:-10px 0 40px rgba(0,0,0,.35);
+  }
+  .main-nav.open{right:0;}
+  .nav-toggle{display:flex;}
+  .nav-close{
+    display:flex; align-items:center; justify-content:center;
+    position:absolute; top:22px; right:24px; width:40px; height:40px;
+    border-radius:50%; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18);
+    color:var(--white); font-size:1.6rem; line-height:1;
+  }
+  .nav-close:hover{background:var(--gold); color:var(--navy-deep); border-color:var(--gold);}
+  .header-phone{display:none;}
+}
+/* .nav-toggle{display:none; flex-direction:column; gap:5px; background:none; border:none; padding:6px;}
+.nav-toggle span{width:24px; height:2px; background:var(--white); transition:transform .3s, opacity .3s;} */
 
 /* =========================================================
    HERO
@@ -562,14 +606,16 @@ ul{list-style:none; margin:0; padding:0;}
       </span> -->
   </a>
 
-    <nav class="main-nav" id="mainNav" aria-label="Primary">
-      <a href="#services">Services</a>
-      <a href="#why-us">Why Us</a>
-      <a href="#gallery">Gallery</a>
-      <a href="#before-after">Restorations</a>
-      <a href="#process">Process</a>
-      <a href="#contact">Contact</a>
-    </nav>
+  <nav class="main-nav" id="mainNav" aria-label="Primary">
+    <button class="nav-close" id="navClose" aria-label="Close menu">&times;</button>
+    <a href="#services">Services</a>
+    <a href="#why-us">Why Us</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#before-after">Restorations</a>
+    <a href="#process">Process</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="nav-backdrop" id="navBackdrop"></div>
 
     <div class="header-actions">
       <a href="tel:+2349091628125" class="header-phone">
@@ -644,7 +690,7 @@ ul{list-style:none; margin:0; padding:0;}
         </div>
         <h3>Auto Repairs</h3>
         <p>Engine repairs, transmission repairs, suspension work and electrical system diagnostics &amp; fixes.</p>
-        <span class="service-more">Learn more <i>&rarr;</i></span>
+        <!-- <span class="service-more">Learn more <i>&rarr;</i></span> -->
       </article>
 
       <article class="service-card reveal">
@@ -653,7 +699,7 @@ ul{list-style:none; margin:0; padding:0;}
         </div>
         <h3>Vehicle Maintenance</h3>
         <p>Routine oil changes, full servicing schedules and precision brake maintenance to keep you road-ready.</p>
-        <span class="service-more">Learn more <i>&rarr;</i></span>
+        <!-- <span class="service-more">Learn more <i>&rarr;</i></span> -->
       </article>
 
       <article class="service-card reveal">
@@ -662,7 +708,7 @@ ul{list-style:none; margin:0; padding:0;}
         </div>
         <h3>Diagnostics</h3>
         <p>Advanced computerized vehicle diagnostics to detect issues early and prevent costly breakdowns.</p>
-        <span class="service-more">Learn more <i>&rarr;</i></span>
+        <!-- <span class="service-more">Learn more <i>&rarr;</i></span> -->
       </article>
 
       <article class="service-card reveal">
@@ -671,7 +717,7 @@ ul{list-style:none; margin:0; padding:0;}
         </div>
         <h3>Vehicle Sales</h3>
         <p>Quality, thoroughly inspected vehicles ready for immediate purchase with transparent history.</p>
-        <span class="service-more">Learn more <i>&rarr;</i></span>
+        <!-- <span class="service-more">Learn more <i>&rarr;</i></span> -->
       </article>
 
       <article class="service-card reveal">
@@ -680,7 +726,7 @@ ul{list-style:none; margin:0; padding:0;}
         </div>
         <h3>Vehicle Inspection</h3>
         <p>Comprehensive pre-purchase and safety inspections so you buy or sell with full confidence.</p>
-        <span class="service-more">Learn more <i>&rarr;</i></span>
+        <!-- <span class="service-more">Learn more <i>&rarr;</i></span> -->
       </article>
 
       <article class="service-card reveal">
@@ -689,7 +735,7 @@ ul{list-style:none; margin:0; padding:0;}
         </div>
         <h3>Automotive Consultation</h3>
         <p>Expert mechanical guidance and consultation before you buy, sell, or invest in vehicle upgrades.</p>
-        <span class="service-more">Learn more <i>&rarr;</i></span>
+        <!-- <span class="service-more">Learn more <i>&rarr;</i></span> -->
       </article>
     </div>
   </div>
@@ -991,7 +1037,7 @@ ul{list-style:none; margin:0; padding:0;}
 </footer>
 
 <!-- ============ WHATSAPP FLOAT ============ -->
-<a class="whatsapp-float" href="https://wa.me/2348000000000?text=Hello%2C%20I%27d%20like%20to%20enquire%20about%20your%20automotive%20services." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+<a class="whatsapp-float" href="https://wa.me/2349091628125?text=Hello%2C%20I%27d%20like%20to%20enquire%20about%20your%20automotive%20services." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
   <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M17.6 6.3A8 8 0 006 17.7L5 21l3.4-1a8 8 0 009.2-13.7z" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/><path d="M9 10.5c0 3 2.5 5.5 5.5 5.5.4-.6.7-1.3.8-2l-2-1-1 1a5 5 0 01-3-3l1-1-1-2c-.7.1-1.4.4-2 .8z" stroke="#FFFFFF" stroke-width="1.4" stroke-linejoin="round"/></svg>
 </a>
 
