@@ -140,9 +140,15 @@ ul{list-style:none; margin:0; padding:0;}
 
 .logo-img{
     width: 180px;
-    height: 180px;
+    height: auto;
+    display: block;
     object-fit: contain;
 }
+/*.logo-img{
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+}*/
 
 .main-nav{display:flex; gap:34px;}
 .main-nav a{font-family:var(--font-head); font-weight:700; font-size:13.5px; letter-spacing:.02em; color:var(--white); position:relative; padding:6px 0;}
@@ -500,6 +506,33 @@ ul{list-style:none; margin:0; padding:0;}
 }
 
 @media (max-width: 860px){
+  .logo-img{
+    width: 140px;
+  }
+}
+
+@media (max-width: 640px){
+  .header-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo-area{
+  flex-shrink:1;
+}
+
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+  .logo-img{
+    width: 110px;
+  }
+}
+
+@media (max-width: 860px){
   .header-inner{padding:14px 20px;}
   .main-nav{
     position:fixed; top:0; right:-100%; height:100vh; width:78%; max-width:320px;
@@ -527,8 +560,11 @@ ul{list-style:none; margin:0; padding:0;}
   .logo-text strong{font-size:13px;}
   .logo-text em{font-size:9px;}
   .header-actions{gap:10px;}
-  #openBooking{padding:10px 14px; font-size:11px; letter-spacing:.01em;}
+  #openBooking{padding:8px 12px; font-size:10px; letter-spacing:0;}
+  #openBooking{white-space:nowrap; flex-shrink:0;}
+  /* #openBooking{padding:10px 14px; font-size:11px; letter-spacing:.01em;} */
   .nav-toggle{padding:4px;}
+  .nav-toggle{flex-shrink:0;}
 
   .hero{padding-top:100px;}
   .hero-cta{flex-direction:column; align-items:stretch; gap:14px;}
@@ -1123,16 +1159,33 @@ document.addEventListener('DOMContentLoaded', () => {
   onScroll();
 
   /* ---------- MOBILE NAV ---------- */
-  const navToggle = document.getElementById('navToggle');
-  const mainNav = document.getElementById('mainNav');
-  navToggle.addEventListener('click', () => {
-    const open = mainNav.classList.toggle('open');
-    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-  mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    mainNav.classList.remove('open');
-    navToggle.setAttribute('aria-expanded', 'false');
-  }));
+const navToggle = document.getElementById('navToggle');
+const mainNav = document.getElementById('mainNav');
+const navClose = document.getElementById('navClose');
+const navBackdrop = document.getElementById('navBackdrop');
+
+const openNav = () => {
+  mainNav.classList.add('open');
+  navToggle.classList.add('active');
+  navBackdrop.classList.add('open');
+  navToggle.setAttribute('aria-expanded', 'true');
+  document.body.style.overflow = 'hidden';
+};
+const closeNav = () => {
+  mainNav.classList.remove('open');
+  navToggle.classList.remove('active');
+  navBackdrop.classList.remove('open');
+  navToggle.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+};
+
+navToggle.addEventListener('click', () => {
+  mainNav.classList.contains('open') ? closeNav() : openNav();
+});
+navClose.addEventListener('click', closeNav);
+navBackdrop.addEventListener('click', closeNav);
+mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNav(); });
 
   /* ---------- SCROLL REVEAL ---------- */
   const revealEls = document.querySelectorAll('.reveal');
